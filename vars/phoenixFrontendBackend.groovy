@@ -1,15 +1,12 @@
 def call(){
-  pipeline {
-      agent any
-      stages {
+	pipeline {
+    	agent any
+      	stages {
     		stage('clone project') {
     			steps {
-            echo OK
-          }
-  		  }
-      }
-   } 
+            		echo "OK"
+          		}
+  		  	}
+      	}
+   	} 
 }
-
-
-
