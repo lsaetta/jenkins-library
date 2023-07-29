@@ -1,10 +1,10 @@
-def call(String branchName, String credId, String gitUrl){
+def call(){
     stages {
 		stage('cloneProject') {
 			steps {
-				git branch: branchName, changelog: false, credentialsId: credId, poll: true, url: gitUrl
+				git branch: BRANCH_NAME, changelog: false, credentialsId: CRED_ID, poll: true, url: GIT_PROJECT_URL
 				dir('kubernetes') {
-					git branch: 'development', changelog: false, credentialsId: credId, poll: true, url: 'git@geogitlab1.intersistemi.it:geosystems/kubernates.git'
+					git branch: 'development', changelog: false, credentialsId: CRED_ID, poll: true, url: 'git@geogitlab1.intersistemi.it:geosystems/kubernates.git'
 				}
 			}
 		}
