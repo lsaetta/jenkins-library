@@ -1,4 +1,4 @@
-def call(){
+def call() {
 	stage('cloneProject') {
 		steps {
 			git branch: BRANCH_NAME, changelog: false, credentialsId: CRED_ID, poll: true, url: GIT_PROJECT_URL
