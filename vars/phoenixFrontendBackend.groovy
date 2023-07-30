@@ -1,8 +1,5 @@
 def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT_URL, String PHXVER, String RJSVER, String PACKAGE_VERSION) {
 	
-	//'e413ba80-0b66-48c3-b9bc-a1940924e50b'
-	
-
 	pipeline {
 		agent any
 		stages {
