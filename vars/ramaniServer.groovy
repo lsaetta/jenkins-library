@@ -24,7 +24,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					sh "ls ./ramani/ -la"
 					sh "docker build ${DOCKER_CACHE} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./ramani/Dockerfile ./ramani"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f"
-					sh "docker image prune -a --force --filter 'until=10m'"
+					//sh "docker image prune -a --force --filter 'until=10m'"
 				}
 			}
 		}

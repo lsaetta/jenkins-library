@@ -36,7 +36,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 					sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER} -f"
-					sh "docker image prune -a --force --filter 'until=10m'"
+					//sh "docker image prune -a --force --filter 'until=10m'"
 				}
 			}
 			stage('deploy') {
