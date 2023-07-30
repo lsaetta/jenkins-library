@@ -20,7 +20,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					}
 				}
 			}
-			stage('buils') {
+			stage('builds') {
 				parallel {
 					stage('build frontend') {
 						steps {

@@ -20,7 +20,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					}
 				}
 			}
-			stage('buils') {
+			stage('build') {
 				steps {
 					sh "cp -n ./kubernetes/template_phoenix/frontend/Dockerfile ./frontend/Dockerfile"
 					sh "ls ./frontend -la"
