@@ -10,7 +10,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 				steps {
 					git branch: BRANCH_NAME, changelog: false, credentialsId: CRED_ID, poll: true, url: GIT_PROJECT_URL
 					dir('kubernetes') {
-						git branch: 'development', changelog: false, credentialsId: CRED_ID, poll: true, url: 'git@geogitlab1.intersistemi.it:geosystems/kubernates.git'
+						git branch: 'development', changelog: false, credentialsId: CRED_ID, poll: false, url: 'git@geogitlab1.intersistemi.it:geosystems/kubernates.git'
 					}
 				}
 			}
