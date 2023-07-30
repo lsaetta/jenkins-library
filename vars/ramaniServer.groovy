@@ -23,7 +23,8 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					sh "cp ./kubernetes/template_phoenix/backend/maven_settings.xml ./ramani/"
 					sh "ls ./ramani/ -la"
 					sh "docker build ${DOCKER_CACHE} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./ramani/Dockerfile ./ramani"
-					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
+					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f"
+					sh "docker image prune -a --force --filter 'until=10m'"
 				}
 			}
 		}

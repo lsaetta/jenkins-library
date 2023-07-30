@@ -30,7 +30,8 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 							sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT} --build-arg RJSVER=${RJSVER} --build-arg PHXVER=${PHXVER} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./frontend/Dockerfile ./frontend"
 							sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 							sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
-							sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
+							sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f"
+							sh "docker image prune -a --force --filter 'until=10m'"
 						}
 					}
 					stage('build backend') {
@@ -42,7 +43,8 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 							sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server -f ./backend/Dockerfile ./backend"
 							sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 							sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server"
-							sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server"
+							sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-server -f"
+							sh "docker image prune -a --force --filter 'until=10m'"
 						}
 					}
 				}
