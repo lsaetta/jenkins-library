@@ -1,7 +1,7 @@
-def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT_URL, String PHXVER, String RJSVER, String PACKAGE_VER) {
+def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT_URL, String PHXVER, String RJSVER, String PACKAGE_VERSION) {
 	
 	//'e413ba80-0b66-48c3-b9bc-a1940924e50b'
-	def PACKAGE_VERSION = ""
+	
 
 	pipeline {
 		agent any
@@ -17,7 +17,9 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 			stage('get version') {
 				steps {
 					script {
-						PACKAGE_VERSION = sh(script: '''awk -F'"' '/"version": ".+"/{ print $4; exit; }' ./frontend/package.json''', returnStdout: true).trim()
+						if (PACKAGE_VERSION == ""){
+							PACKAGE_VERSION = sh(script: '''awk -F'"' '/"version": ".+"/{ print $4; exit; }' ./frontend/package.json''', returnStdout: true).trim()
+						}
 					}
 				}
 			}
