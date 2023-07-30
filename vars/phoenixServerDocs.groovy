@@ -30,7 +30,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 					sh "docker login ${NEXUS_DOCKER_PUSH_URL} -u geosystems -p developer"
 					sh "docker build ${DOCKER_CACHE} --build-arg MAJOR=${PACKAGE_MAJOR} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ."
 					sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER}"
-					sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs"
+					sh "docker push ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER} -f"
 					//sh "docker image prune -a --force --filter 'until=10m'"
 				}
