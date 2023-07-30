@@ -22,7 +22,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 				steps {
 					sh "cp ./kubernetes/template_phoenix/backend/maven_settings.xml ./ramani/"
 					sh "ls ./ramani/ -la"
-					sh "docker build --no-cache -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./ramani/Dockerfile ./ramani"
+					sh "docker build ${DOCKER_CACHE} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./ramani/Dockerfile ./ramani"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
 				}
 			}

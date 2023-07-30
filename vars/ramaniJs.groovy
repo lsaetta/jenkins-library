@@ -29,7 +29,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 				steps {
 
 					sh "docker login ${NEXUS_DOCKER_PUSH_URL} -u geosystems -p developer"
-					sh "docker build --no-cache --build-arg APPNAME=${PROJECT} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} ."
+					sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} ."
 					sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 					sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
@@ -38,7 +38,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 			stage('deploy') {
 				steps {
 					sh "ls ./kubernetes/helm_argocd_frontend/ -la"
-					sh "docker build --no-cache --build-arg APPNAME=${PROJECT} --build-arg TAGIMG=${PACKAGE_VERSION}.${BUILD_NUMBER} -t k8sctl-${PROJECT} -f ./kubernetes/helm_argocd_frontend/Dockerfile ./kubernetes/helm_argocd_frontend/"
+					sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT} --build-arg TAGIMG=${PACKAGE_VERSION}.${BUILD_NUMBER} -t k8sctl-${PROJECT} -f ./kubernetes/helm_argocd_frontend/Dockerfile ./kubernetes/helm_argocd_frontend/"
 					sh "docker rmi k8sctl-${PROJECT}"
 				}
 			}

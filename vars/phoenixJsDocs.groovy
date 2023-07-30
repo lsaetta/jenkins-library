@@ -32,7 +32,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 				steps {
 					sh "echo 'registry=http://${NEXUS_NPM_URL}/repository/geosystems-npm-group/' > .npmrc"
 					sh "docker login ${NEXUS_DOCKER_PUSH_URL} -u geosystems -p developer"
-					sh "docker build --no-cache --build-arg APPNAME=${PROJECT}-${PACKAGE_MAJOR}-docs --build-arg RJSVER=${RJSVER} --build-arg VER=${PACKAGE_VERSION} --build-arg MAJOR=${PACKAGE_MAJOR} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ."
+					sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT}-${PACKAGE_MAJOR}-docs --build-arg RJSVER=${RJSVER} --build-arg VER=${PACKAGE_VERSION} --build-arg MAJOR=${PACKAGE_MAJOR} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ."
 					sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 					sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}-${PACKAGE_MAJOR}-docs:${PACKAGE_VERSION}.${BUILD_NUMBER}"
@@ -41,7 +41,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 			stage('deploy') {
 				steps {
 					sh "ls ./kubernetes/helm_argocd_frontend/ -la"
-					sh "docker build --no-cache --build-arg APPNAME=${PROJECT}-${PACKAGE_MAJOR}-docs --build-arg TAGIMG=${PACKAGE_VERSION}.${BUILD_NUMBER} -t k8sctl-${PROJECT}-${PACKAGE_MAJOR} -f ./kubernetes/helm_argocd_frontend/Dockerfile ./kubernetes/helm_argocd_frontend/"
+					sh "docker build ${DOCKER_CACHE} --build-arg APPNAME=${PROJECT}-${PACKAGE_MAJOR}-docs --build-arg TAGIMG=${PACKAGE_VERSION}.${BUILD_NUMBER} -t k8sctl-${PROJECT}-${PACKAGE_MAJOR} -f ./kubernetes/helm_argocd_frontend/Dockerfile ./kubernetes/helm_argocd_frontend/"
 					sh "docker rmi k8sctl-${PROJECT}-${PACKAGE_MAJOR}"
 				}
 			}
