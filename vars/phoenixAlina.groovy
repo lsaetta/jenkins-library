@@ -14,7 +14,7 @@ def call (String BRANCH_NAME, String CRED_ID, String PROJECT, String GIT_PROJECT
 			stage('buils') {
 				steps {
 					sh "docker login ${NEXUS_DOCKER_PUSH_URL} -u geosystems -p developer"
-					sh "docker build ${CACHE} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./Dockerfile ."
+					sh "docker build ${DOCKER_CACHE} -t ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} -f ./Dockerfile ."
 					sh "docker tag ${NEXUS_DOCKER_PUSH_URL}/${PROJECT} ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}:${PACKAGE_VERSION}.${BUILD_NUMBER}"
 					sh "docker push -a ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
 					sh "docker rmi ${NEXUS_DOCKER_PUSH_URL}/${PROJECT}"
